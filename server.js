@@ -1,21 +1,34 @@
 import express from "express";
-import dotenv, { config } from "dotenv";
+import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
+import helmet from 'helmet';
 
 import connectToMongoDB from "./db/connectToMongoDB.js";
-import userRoute from './routers/user.router.js';
+import userRoute from "./routers/user.router.js";
+import authRoute from "./routers/auth.router.js";
 
 dotenv.config();
 
-
 const app = express();
-const PORT = process.env.PORT || 5000; 
+const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
+app.use(cookieParser());
+app.use(helmet());
 
-app.use('/', userRoute)
+app.use("/", authRoute);
+app.use("/", userRoute);
 
+app.use((err, req, res, next) => {
+  if (err.name === "UnauthorizedError") {
+    res.status(401).json({ error: `${err.name}: ${err.message}` });
+  } else if (err) {
+    res.status(400).json({ error: `${err.name}: ${err.message}` });
+    console.log(err);
+  }
+});
 
 app.listen(PORT, () => {
-    console.log(`server is running at http://localhost:${PORT}`)
-    connectToMongoDB();
-})
+  console.log(`server is running at http://localhost:${PORT}`);
+  connectToMongoDB();
+});
