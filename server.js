@@ -6,6 +6,7 @@ import helmet from 'helmet';
 import connectToMongoDB from "./db/connectToMongoDB.js";
 import userRoute from "./routers/user.router.js";
 import authRoute from "./routers/auth.router.js";
+import taskRoute from './routers/task.router.js';
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.use(helmet());
 
 app.use("/", authRoute);
 app.use("/", userRoute);
+app.use("/", taskRoute);
 
 app.use((err, req, res, next) => {
   if (err.name === "UnauthorizedError") {

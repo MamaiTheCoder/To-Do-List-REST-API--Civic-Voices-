@@ -50,7 +50,7 @@ const signin = async (req, res) => {
 
 const signout = (req, res) => {
   res.clearCookie("t");
-  return res.status("200").json({
+  return res.status(200).json({
     message: "signed out",
   });
 };
@@ -64,7 +64,7 @@ const requireSignin = expressJwt.expressjwt({
 const hasAuthorization = (req, res, next) => {
   const authorized = req.user && req.auth && req.user._id == req.auth._id;
   if (!authorized) {
-    return res.status("403").json({
+    return res.status(403).json({
       error: "User is not authorized",
     });
   }
