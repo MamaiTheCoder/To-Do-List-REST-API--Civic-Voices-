@@ -33,9 +33,9 @@ npm install
 
 ### Setup
 
-- Create an .env file by copying the .env.example file:
-Note: replace the the angle brackets with actuall values from mongoDB atlas
-[instructions on how to use mongoDB](https://www.mongodb.com/resources/products/fundamentals/mongodb-connection-string)
+- Create a .env file and copy the example below to it.
+- Note: replace the the angle brackets with actual values from mongoDB atlas
+- [instructions on how to use mongoDB](https://www.mongodb.com/resources/products/fundamentals/mongodb-connection-string)
 - Open the terminal and generate secret key with `openssl rand -base64 32`(\*\*optional).
 
 ```
@@ -43,8 +43,6 @@ MONGO_DB_URI=mongodb+srv://<your username>:<your password>@cluster0.vnabx.mongod
 PORT=<port you want the api to run on>
 JWT_SECRET=<set your secret key>
 ```
-
-cp .env.example .env
 
 ### Running Locally
 
@@ -205,17 +203,8 @@ Error Handling:
 
 #### GET /api/v1/auth/signout
 - Description: sign outs an existing user and deletes the token.
-- Request Body:
-json
-
-```
-{
-
-}
-```
 
 Response Example:
-json
 
 ```
 {
@@ -371,6 +360,61 @@ Error Codes
 - 401 Unauthorized: Missing or invalid JWT token.
 - 404 Not Found: Resource not found (e.g., todo).
 - 500 Internal Server Error: Server error.
+
+## Future Enhancements
+
+Here are some planned features and improvements:
+
+### 1. **Password Reset & Email Verification**
+   - **Description**: Users will be able to reset their password via email and verify their email address during registration.
+   - **Expected Outcome**: Enhanced user security and account recovery options.
+   - **Implementation**: A link to reset the password will be sent to the user's email. Additionally, users will receive an email to verify their account before they can log in.
+
+### 2. **User Profile Updates**
+   - **Description**: Allow users to and and update profile picture.
+   - **Expected Outcome**: A more personalized user experience.
+   - **Implementation**: Users will be able to send a `PUT` request to update profile information.
+
+### 3. **Task Categories and Priority Levels**
+   - **Description**: Introduce task categories (e.g., "Work", "Personal", "Shopping") and priority levels (e.g., "Low", "Medium", "High").
+   - **Expected Outcome**: Organize tasks better and allow users to filter tasks by category or priority.
+   - **Implementation**: The `Task` model will include fields for `category` and `priority`. The frontend will allow users to select these options when creating or updating tasks.
+
+### 4. **Task Due Dates and Reminders**
+   - **Description**: Add due dates to tasks and set up reminders (e.g., via email or notifications).
+   - **Expected Outcome**: Helps users keep track of important deadlines and stay on top of their tasks.
+   - **Implementation**: Users can set due dates when creating or updating tasks. Reminders will be sent out before the due date.
+
+### 5. **Task Comments & Collaboration**
+   - **Description**: Allow users to add comments on tasks, creating a collaborative environment where multiple users can discuss tasks.
+   - **Expected Outcome**: Improve team collaboration and communication within tasks.
+   - **Implementation**: A new `Comment` model will be introduced, linked to tasks. Users can add, update, or delete comments.
+
+### 6. **Rate-Limiting & API Security**
+   - **Description**: Implement rate-limiting for certain API routes to prevent abuse and improve security.
+   - **Expected Outcome**: Prevent users from making too many requests in a short period, protecting the server and enhancing user experience.
+   - **Implementation**: Use libraries like [express-rate-limit](https://www.npmjs.com/package/express-rate-limit) to control API access.
+
+### 7. **Search Functionality**
+   - **Description**: Add search functionality to allow users to find specific tasks by title, description, or keywords.
+   - **Expected Outcome**: Provide users with an easier way to manage their tasks.
+   - **Implementation**: Implement search functionality in the `GET /todos` route to filter tasks based on query parameters.
+
+### 8. **User Roles & Permissions**
+   - **Description**: Implement user roles such as `admin` and `user`, where admins have additional permissions (e.g., managing other users' tasks).
+   - **Expected Outcome**: Introduce a role-based access control system for better management and security.
+   - **Implementation**: Add a `role` field to the `User` model, and restrict access to certain routes based on the role.
+
+### 9. **API Documentation with Swagger/OpenAPI**
+   - **Description**: Generate comprehensive API documentation using tools like Swagger or OpenAPI, which will make it easier for developers to understand and interact with the API.
+   - **Expected Outcome**: More accessible and user-friendly documentation for developers.
+   - **Implementation**: Use libraries such as [swagger-jsdoc](https://www.npmjs.com/package/swagger-jsdoc) to auto-generate API docs based on the code.
+
+### 10. **Automated Testing**
+   - **Description**: Implement automated tests for key routes and functionality using tools like [Jest](https://jestjs.io/) and [Supertest](https://www.npmjs.com/package/supertest).
+   - **Expected Outcome**: Improve code reliability and ensure the app works as expected across updates.
+   - **Implementation**: Write unit and integration tests to verify the correct behavior of the API endpoints.
+
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
