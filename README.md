@@ -25,7 +25,9 @@ Clone the repository and install the dependencies:
 
 ```bash
 git clone https://github.com/MamaiTheCoder/To-Do-List-REST-API--Civic-Voices-.git
-cd cd To-Do-List-REST-API--Civic-Voices-
+
+cd To-Do-List-REST-API--Civic-Voices-
+
 npm install
 ```
 
