@@ -39,7 +39,7 @@ Note: replace the the angle brackets with actuall values from mongoDB atlas
 - Open the terminal and generate secret key with `openssl rand -base64 32`(\*\*optional).
 
 ```
-MONGO_DB_URI_TWO=mongodb+srv://<your username>:<your password>@cluster0.vnabx.mongodb.net/<your database name>?retryWrites=true&w=majority&appName=Cluster0
+MONGO_DB_URI=mongodb+srv://<your username>:<your password>@cluster0.vnabx.mongodb.net/<your database name>?retryWrites=true&w=majority&appName=Cluster0
 PORT=<port you want the api to run on>
 JWT_SECRET=<set your secret key>
 ```
