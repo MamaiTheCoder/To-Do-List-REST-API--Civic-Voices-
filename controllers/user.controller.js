@@ -6,18 +6,12 @@ import User from '../models/user.model.js';
 
 const create = async (req, res) => {
     try {
-        const newUser = await new User(req.body);
-
-        console.log(newUser);
-        
+        const newUser = new User(req.body);
 
         await newUser.save();
 
-        if (!newUser) {
-            return res.status(400).json({error: 'Cannot create your account'})
-        }
 
-        return res.status(200).json({
+        return res.status(201).json({
             message: "Successfully signed up!",
         });
     } catch (error) {
@@ -30,6 +24,8 @@ const list = async (req, res) => {
     try {
         const users = await User.find().select('username email created, updated');
 
+        console.log(users);
+        
         if (!users) {
             return res.status(400).json('No users found in the database');
         }

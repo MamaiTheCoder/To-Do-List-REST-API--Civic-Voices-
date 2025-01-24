@@ -19,7 +19,7 @@ router.route('/tasks/by/:userId')
         taskCtrl.listByUser
     )
 
-router.route('/tasks/:taskId/user/:userId')
+router.route('/tasks/:taskId/users/:userId')
     .get(
         authCtrl.requireSignin,
         taskCtrl.retrieve

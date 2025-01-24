@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 
 import Task from "../models/task.model.js";
 
-const getMongooseObjectId = (req, paramName) => {
+const getMongooseObjectId = (req, res, paramName) => {
   const id = req.params[paramName];
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({

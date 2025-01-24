@@ -1,6 +1,6 @@
 import User from "../models/user.model.js";
 import jwt from "jsonwebtoken";
-import expressJwt from "express-jwt";
+import { expressjwt } from 'express-jwt';
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -55,10 +55,10 @@ const signout = (req, res) => {
   });
 };
 
-const requireSignin = expressJwt.expressjwt({
+const requireSignin = expressjwt({
   secret: process.env.JWT_SECRET,
-  algorithms: ["HS256"],
-  userProperty: "auth", // Attach decoded JWT payload to `req.auth`
+  algorithms: ['HS256'],
+  userProperty: 'auth',  // Attach the decoded JWT payload to `req.auth`
 });
 
 const hasAuthorization = (req, res, next) => {
