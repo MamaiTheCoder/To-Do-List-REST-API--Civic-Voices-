@@ -17,9 +17,9 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(helmet());
 
-app.use("/", authRoute);
-app.use("/", userRoute);
-app.use("/", taskRoute);
+app.use("/api/v1", authRoute);
+app.use("/api/v1", userRoute);
+app.use("/api/v1", taskRoute);
 
 app.use((err, req, res, next) => {
   if (err.name === "UnauthorizedError") {
