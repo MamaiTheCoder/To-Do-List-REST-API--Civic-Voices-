@@ -52,9 +52,9 @@ Start the API locally by running:
 
 `npm start`
 
-## Authentication
+## User
 
-This API uses JWT for authentication. After logging in, use the token provided.
+This API performs CRUD operation to users.
 
 ### API Endpoints
 
@@ -119,7 +119,23 @@ json
 	"__v": 0
 }
 ```
-#### GET /api/v1/users/:userId
+#### PUT /api/v1/users/:userId
+
+Description: update your user account.
+
+Response Example:
+json
+```
+{
+	"_id": "6793808f44d43405f61719f0",
+	"fullName": "e f",
+	"username": "e",
+	"email": "e@e.com",
+	"created": "2025-01-24T11:59:11.689Z",
+	"__v": 0
+}
+```
+#### DELETE /api/v1/users/:userId
 
 Description: Delete your user account.
 
@@ -155,40 +171,9 @@ This API uses JWT (JSON Web Tokens) for authentication.
 You must authenticate with your email and password to access protected routes (such as creating or viewing todos).
 Note: your credentials will be validated.
 
-### Register User
-
-URL: /api/v1/users
-Method: POST
-Description: Register a new user with an email and password.
-Request Body:
-json
-
-```
-{
-    fullName: "test user"
-    "email": "user@example.com",
-    "password": "yourpassword123"
-}
-```
-
-Response Example:
-json
-
-```
-{
-    "status": "success",
-    "message": "User registered successfully"
-}
-```
-
-Error Handling:
-400 Bad Request: Invalid email or password format.
-409 Conflict: User already exists.
-
 ### Login User
 
-URL: /api/v1/auth/login
-Method: POST
+#### POST /api/v1/auth/login
 Description: Log in an existing user to receive a JWT token.
 Request Body:
 json
@@ -218,10 +203,9 @@ Error Handling:
 
 ### Sign out
 
-URL: /api/v1/auth/signout
-Method: POST
-Description: sign outs an existing user and deletes the token.
-Request Body:
+#### GET /api/v1/auth/signout
+- Description: sign outs an existing user and deletes the token.
+- Request Body:
 json
 
 ```
@@ -235,7 +219,6 @@ json
 
 ```
 {
-    "status": "success",
     "message": "signed out"
 }
 ```
@@ -249,21 +232,17 @@ To access protected routes (such as creating or viewing todos), you must include
 Once authenticated, users can perform CRUD operations on their todos.
 
 ### Create a Todo
-URL: /api/v1/tasks/new/:userId
-Method: POST
-Description: Create a new todo.
-Authorization in postman: Bearer token
-Request Body:
-json
-
+#### POST /api/v1/tasks/new/:userId
+- Description: Create a new todo.
+- Authorization in postman: Bearer token
+- Request Body:
 ```
 {
 	"title": "new",
 	"description": "new todo"
 }
 ```
-Response Example:
-json
+- Response Example:
 ```
 {
 	"title": "new",
@@ -281,12 +260,10 @@ json
 - 401 Unauthorized: Missing or invalid JWT token.
 
 ### Get All Todos
-URL: /api/v1/tasks/by/:userId'
-Method: GET
-Description: Get a list of all the todos for the authenticated user.
-Authorization: Bearer token in postman
-Response Example:
-json
+#### GET /api/v1/tasks/by/:userId'
+- Description: Get a list of all the todos for the authenticated user.
+- Authorization: Bearer token in postman
+- Response Example:
 ```
 [
 	{
@@ -321,12 +298,10 @@ json
 - 401 Unauthorized: UnauthorizedError: No authorization token was found.
 
 ### Get a Single Todo
-URL: /api/v1/tasks/:taskId/users/:userId
-Method: GET
-Description: Get a specific todo by its ID.
-Authorization: Bearer token in postman
-Response Example:
-json
+#### GET /api/v1/tasks/:taskId/users/:userId
+- Description: Get a specific todo by its ID.
+- Authorization: Bearer token in postman
+- Response Example:
 ```
 {
 	"_id": "679389a3a4029cefa8adc5a2",
@@ -347,12 +322,18 @@ json
 - 404 Not Found: Todo not found.
 
 ### Update a Todo
-URL: /tasks/:taskId/users/:userId
-Method: PUT
-Description: Update a specific todo.
-Request Headers:
-Authorization: Bearer token in postman
-Request Body:
+#### PUT /tasks/:taskId/users/:userId
+- Description: Update a specific todo.
+- Authorization: Bearer token in postman
+- Request Body
+```
+{
+	"title": "change",
+	"description": "new todo",
+	"completed": true,
+}
+```
+Response Example:
 json
 ```
 {
@@ -366,32 +347,16 @@ json
 	"updated": "2025-01-24T13:02:47.803Z"
 }
 ```
-Response Example:
-json
-```
-{
-    "status": "success",
-    "data": {
-        "id": 1,
-        "title": "Buy groceries and more",
-        "description": "Milk, eggs, bread, and vegetables",
-        "completed": false,
-        "createdAt": "2025-01-24T12:00:00Z"
-    }
-}
-```
 #### Error Handling:
 - 400 Bad Request: Invalid data.
 - 401 Unauthorized: Missing or invalid JWT token.
 - 404 Not Found: Todo not found.
 
 ### Delete a Todo
-URL: /api/v1/tasks/:taskId/users/:userId
-Method: DELETE
-Description: Delete a specific todo.
-Authorization: Bearer token in postman
-Response Example:
-json
+#### DELETE /api/v1/tasks/:taskId/users/:userId
+- Description: Delete a specific todo.
+- Authorization: Bearer token in postman
+- Response Example:
 ```
 {
 	"message": "Task successfully deleted"
