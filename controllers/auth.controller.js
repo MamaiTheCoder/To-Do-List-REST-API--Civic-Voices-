@@ -11,8 +11,6 @@ const signin = async (req, res) => {
       email: req.body.email,
     });
 
-    // console.log(user);
-
     if (!user) {
       return res.status(401).json({
         error: "User not found",
@@ -26,8 +24,6 @@ const signin = async (req, res) => {
     }
 
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
-
-    console.log(token);
 
     res.cookie("t", token, {
       expire: new Date() + 9999,

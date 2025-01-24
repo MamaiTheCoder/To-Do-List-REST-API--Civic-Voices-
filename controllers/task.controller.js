@@ -40,7 +40,9 @@ const create = async (req, res) => {
 
 const listByUser = async (req, res) => {
   try {
-    const userId = getMongooseObjectId(req, 'userId');
+    const userId = getMongooseObjectId(req, res, 'userId');
+    console.log(userId);
+    
 
     if (!userId) {
       return res.status(400).json({ error: 'Invalid user ID format' });
@@ -55,12 +57,6 @@ const listByUser = async (req, res) => {
         message: 'You are not authorized to access this task'
       });
     }
-
-    // if (tasks.length === 0) {
-    //   return res.status(400).json({
-    //     message: "You have no todos"
-    //   });
-    // }
 
     return res.status(200).json(tasks);
   } catch (error) {
@@ -90,8 +86,8 @@ const retrieveTaskByID = async (req, res, next, id) => {
 const retrieve = async (req, res) => {
 
   try {
-    const taskId = getMongooseObjectId(req, 'taskId');
-    const userId = getMongooseObjectId(req, 'userId');
+    const taskId = getMongooseObjectId(req, res, 'taskId');
+    const userId = getMongooseObjectId(req, res, 'userId');
 
      // Check if ObjectIds are valid
     if (!userId || !taskId) {
@@ -120,8 +116,8 @@ const retrieve = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    const userId = getMongooseObjectId(req, 'userId');  // Extract userId from the request params
-    const taskId = getMongooseObjectId(req, 'taskId');  // Extract taskId from the request params
+    const userId = getMongooseObjectId(req, res, 'userId');  // Extract userId from the request params
+    const taskId = getMongooseObjectId(req, res, 'taskId');  // Extract taskId from the request params
 
     // Check if both userId and taskId are valid
     if (!userId || !taskId) {
@@ -153,8 +149,8 @@ const update = async (req, res) => {
 
 const remove = async (req, res) => {
   try {
-    const userId = getMongooseObjectId(req, 'userId');  // Extract userId from the request params
-    const taskId = getMongooseObjectId(req, 'taskId');  // Extract taskId from the request params
+    const userId = getMongooseObjectId(req, res, 'userId');  // Extract userId from the request params
+    const taskId = getMongooseObjectId(req, res, 'taskId');  // Extract taskId from the request params
 
     // Check if both userId and taskId are valid
     if (!userId || !taskId) {

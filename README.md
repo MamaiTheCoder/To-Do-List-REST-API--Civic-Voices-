@@ -65,16 +65,17 @@ Request Body:
 json
 ```
 {
-"name": "John Doe",
-"email": "john.doe@example.com"
+	"fullName": "test  user",
+	"username": "test",
+	"email": "test@email.com",
+	"password": "123456"
 }
 ```
 Response Example:
 json
 ```
 {
-"status": "success",
-"data": { "id": 3, "name": "John Doe", "email": "john.doe@example.com" }
+	"message": "Successfully signed up!"
 }
 ```
 #### GET /api/v1/users
@@ -84,12 +85,54 @@ Description: Get a list of all users.
 Response Example:
 json
 ```
-{
-"status": "success",
-"data": [
-{ "id": 1, "name": "test user1" },
-{ "id": 2, "name": "test user2" }
+[
+	{
+		"_id": "67921bf8e95272a5366b368f",
+		"username": "testuser1",
+		"email": "testuser1@example.com"
+	},
+	{
+		"_id": "67921d2b18d1cb98269fbdaa",
+		"username": "testuser2",
+		"email": "testuser2@example.com"
+	},
+	{
+		"_id": "67921df88747b118736f8ac2",
+		"username": "testuser3",
+		"email": "testuser3@example.com"
+	},
 ]
+```
+#### GET /api/v1/users/:userId
+
+Description: Get a single user.
+
+Response Example:
+json
+```
+{
+	"_id": "6793808f44d43405f61719f0",
+	"fullName": "e f",
+	"username": "e",
+	"email": "e@e.com",
+	"created": "2025-01-24T11:59:11.689Z",
+	"__v": 0
+}
+```
+#### GET /api/v1/users/:userId
+
+Description: Delete your user account.
+
+Response Example:
+json
+```
+{
+	"_id": "6793808f44d43405f61719f0",
+	"fullName": "e f",
+	"username": "e",
+	"email": "e@e.com",
+	"created": "2025-01-24T11:59:11.689Z",
+	"__v": 0
 }
 ```
 
@@ -99,6 +142,7 @@ json
 - 201 Ok: created
 - 400 Bad Request: Invalid request data.
 - 401 Unauthorized: Missing or invalid token.
+- 403 Forbidden
 - 404 Not Found: Resource not found.
 - 500 Internal Server Error: Server error.
 
@@ -161,8 +205,11 @@ json
 
 ```
 {
-    "status": "success",
-    "token": "your-jwt-token-here"
+	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzkzODUwYTNlODFhODQ4MGRjZjA2NjUiLCJpYXQiOjE3Mzc3MjExMzh9.tnN9Vqj7NkU-hrnV2ti-ZXB5bYpLkC1nQ7Fhz5EWjOg",
+	"user": {
+		"_id": "6793850a3e81a8480dcf0665",
+		"email": "f@f.com"
+	}
 }
 ```
 
@@ -202,7 +249,7 @@ To access protected routes (such as creating or viewing todos), you must include
 Once authenticated, users can perform CRUD operations on their todos.
 
 ### Create a Todo
-URL: /api/v1/todos/new/:userId
+URL: /api/v1/tasks/new/:userId
 Method: POST
 Description: Create a new todo.
 Authorization in postman: Bearer token
@@ -211,22 +258,21 @@ json
 
 ```
 {
-    "title": "Buy groceries",
-    "description": "Milk, eggs, bread"
+	"title": "new",
+	"description": "new todo"
 }
 ```
 Response Example:
 json
 ```
 {
-    "status": "success",
-    "data": {
-        "id": 1,
-        "title": "Buy groceries",
-        "description": "Milk, eggs, bread",
-        "completed": false,
-        "createdAt": "2025-01-24T12:00:00Z"
-    }
+	"title": "new",
+	"description": "new todo",
+	"completed": false,
+	"postedBy": "6793850a3e81a8480dcf0665",
+	"_id": "679389f8a4029cefa8adc5a4",
+	"created": "2025-01-24T12:39:20.247Z",
+	"__v": 0
 }
 ```
 
@@ -242,31 +288,40 @@ Authorization: Bearer token in postman
 Response Example:
 json
 ```
-{
-    "status": "success",
-    "data": [
-        {
-            "id": 1,
-            "title": "Buy groceries",
-            "description": "Milk, eggs, bread",
-            "completed": false,
-            "createdAt": "2025-01-24T12:00:00Z"
-        },
-        {
-            "id": 2,
-            "title": "Study JavaScript",
-            "description": "Complete the Express.js tutorial",
-            "completed": true,
-            "createdAt": "2025-01-23T09:00:00Z"
-        }
-    ]
-}
+[
+	{
+		"_id": "679389a3a4029cefa8adc5a2",
+		"title": "new",
+		"description": "new todo",
+		"completed": false,
+		"postedBy": {
+			"_id": "6793850a3e81a8480dcf0665",
+			"username": "e",
+			"email": "f@f.com"
+		},
+		"created": "2025-01-24T12:37:55.790Z",
+		"__v": 0
+	},
+	{
+		"_id": "679389f8a4029cefa8adc5a4",
+		"title": "new",
+		"description": "new todo",
+		"completed": false,
+		"postedBy": {
+			"_id": "6793850a3e81a8480dcf0665",
+			"username": "e",
+			"email": "f@f.com"
+		},
+		"created": "2025-01-24T12:39:20.247Z",
+		"__v": 0
+	}
+]
 ```
 #### Error Handling:
-- 401 Unauthorized: Missing or invalid JWT token.
+- 401 Unauthorized: UnauthorizedError: No authorization token was found.
 
 ### Get a Single Todo
-URL: /api/v1//tasks/:taskId/users/:userId
+URL: /api/v1/tasks/:taskId/users/:userId
 Method: GET
 Description: Get a specific todo by its ID.
 Authorization: Bearer token in postman
@@ -274,14 +329,17 @@ Response Example:
 json
 ```
 {
-    "status": "success",
-    "data": {
-        "id": 1,
-        "title": "Buy groceries",
-        "description": "Milk, eggs, bread",
-        "completed": false,
-        "createdAt": "2025-01-24T12:00:00Z"
-    }
+	"_id": "679389a3a4029cefa8adc5a2",
+	"title": "new",
+	"description": "new todo",
+	"completed": false,
+	"postedBy": {
+		"_id": "6793850a3e81a8480dcf0665",
+		"username": "e",
+		"email": "f@f.com"
+	},
+	"created": "2025-01-24T12:37:55.790Z",
+	"__v": 0
 }
 ```
 #### Error Handling:
@@ -289,7 +347,7 @@ json
 - 404 Not Found: Todo not found.
 
 ### Update a Todo
-URL: /api/v1/todos/:id
+URL: /tasks/:taskId/users/:userId
 Method: PUT
 Description: Update a specific todo.
 Request Headers:
@@ -298,8 +356,14 @@ Request Body:
 json
 ```
 {
-    "title": "Buy groceries and more",
-    "description": "Milk, eggs, bread, and vegetables"
+	"_id": "679389a3a4029cefa8adc5a2",
+	"title": "change",
+	"description": "new todo",
+	"completed": true,
+	"postedBy": "6793850a3e81a8480dcf0665",
+	"created": "2025-01-24T12:37:55.790Z",
+	"__v": 0,
+	"updated": "2025-01-24T13:02:47.803Z"
 }
 ```
 Response Example:
@@ -330,8 +394,7 @@ Response Example:
 json
 ```
 {
-    "status": "success",
-    "message": "Todo deleted successfully"
+	"message": "Task successfully deleted"
 }
 ```
 ### Error Handling:
@@ -342,7 +405,6 @@ Error Codes
 - 400 Bad Request: Invalid request data.
 - 401 Unauthorized: Missing or invalid JWT token.
 - 404 Not Found: Resource not found (e.g., todo).
-- 409 Conflict: User already exists (during registration).
 - 500 Internal Server Error: Server error.
 
 ## License

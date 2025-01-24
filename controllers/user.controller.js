@@ -6,10 +6,25 @@ import User from '../models/user.model.js';
 
 const create = async (req, res) => {
     try {
+        // Destructure the fields from the request body
+        const { fullname, email, username, password } = req.body;
+
+        // Check if the email already exists in the database
+        const existingEmail = await User.findOne({ email });
+        if (existingEmail) {
+            return res.status(400).json({ error: "Email is already taken!" });
+        }
+
+        // Check if the username already exists in the database
+        const existingUsername = await User.findOne({ username });
+        if (existingUsername) {
+            return res.status(400).json({ error: "Username is already taken!" });
+        }
+
+        // If no duplicates, proceed with creating the new user
         const newUser = new User(req.body);
 
         await newUser.save();
-
 
         return res.status(201).json({
             message: "Successfully signed up!",
