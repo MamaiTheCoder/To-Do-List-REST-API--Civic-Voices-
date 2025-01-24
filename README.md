@@ -63,19 +63,20 @@ This API uses JWT for authentication. After logging in, use the token provided.
 Description: Create a new user.
 Request Body:
 json
-Copy
+```
 {
 "name": "John Doe",
 "email": "john.doe@example.com"
 }
+```
 Response Example:
 json
-Copy
+```
 {
 "status": "success",
 "data": { "id": 3, "name": "John Doe", "email": "john.doe@example.com" }
 }
-
+```
 #### GET /api/v1/users
 
 Description: Get a list of all users.
