@@ -33,10 +33,10 @@ npm install
 
 ### Setup
 
--> Create an .env file by copying the .env.example file:
+- Create an .env file by copying the .env.example file:
 Note: replace the the angle brackets with actuall values from mongoDB atlas
 [instructions on how to use mongoDB](https://www.mongodb.com/resources/products/fundamentals/mongodb-connection-string)
--> Open the terminal and generate secret key with `openssl rand -base64 32`(\*\*optional).
+- Open the terminal and generate secret key with `openssl rand -base64 32`(\*\*optional).
 
 ```
 MONGO_DB_URI_TWO=mongodb+srv://<your username>:<your password>@cluster0.vnabx.mongodb.net/<your database name>?retryWrites=true&w=majority&appName=Cluster0
@@ -166,7 +166,7 @@ json
 ```
 
 Error Handling:
-401 Unauthorized: Invalid email or password.
+- 401 Unauthorized: Invalid email or password.
 
 ## Protecting Routes
 
@@ -206,8 +206,8 @@ json
 ```
 
 #### Error Handling:
-400 Bad Request: Missing required fields.
-401 Unauthorized: Missing or invalid JWT token.
+- 400 Bad Request: Missing required fields.
+- 401 Unauthorized: Missing or invalid JWT token.
 
 ### Get All Todos
 URL: /api/v1/tasks/by/:userId'
@@ -238,7 +238,7 @@ json
 }
 ```
 #### Error Handling:
-401 Unauthorized: Missing or invalid JWT token.
+- 401 Unauthorized: Missing or invalid JWT token.
 
 ### Get a Single Todo
 URL: /api/v1//tasks/:taskId/users/:userId
@@ -260,8 +260,8 @@ json
 }
 ```
 #### Error Handling:
-401 Unauthorized: Missing or invalid JWT token.
-404 Not Found: Todo not found.
+- 401 Unauthorized: Missing or invalid JWT token.
+- 404 Not Found: Todo not found.
 
 ### Update a Todo
 URL: /api/v1/todos/:id
@@ -292,9 +292,9 @@ json
 }
 ```
 #### Error Handling:
-400 Bad Request: Invalid data.
-401 Unauthorized: Missing or invalid JWT token.
-404 Not Found: Todo not found.
+- 400 Bad Request: Invalid data.
+- 401 Unauthorized: Missing or invalid JWT token.
+- 404 Not Found: Todo not found.
 
 ### Delete a Todo
 URL: /api/v1/tasks/:taskId/users/:userId
@@ -310,15 +310,15 @@ json
 }
 ```
 ### Error Handling:
-401 Unauthorized: Missing or invalid JWT token.
-404 Not Found: Todo not found.
+- 401 Unauthorized: Missing or invalid JWT token.
+- 404 Not Found: Todo not found.
 Error Codes
-200 OK: Successful request.
-400 Bad Request: Invalid request data.
-401 Unauthorized: Missing or invalid JWT token.
-404 Not Found: Resource not found (e.g., todo).
-409 Conflict: User already exists (during registration).
-500 Internal Server Error: Server error.
+- 200 OK: Successful request.
+- 400 Bad Request: Invalid request data.
+- 401 Unauthorized: Missing or invalid JWT token.
+- 404 Not Found: Resource not found (e.g., todo).
+- 409 Conflict: User already exists (during registration).
+- 500 Internal Server Error: Server error.
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
