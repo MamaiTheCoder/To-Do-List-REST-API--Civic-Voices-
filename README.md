@@ -83,7 +83,7 @@ Description: Get a list of all users.
 
 Response Example:
 json
-Copy
+```
 {
 "status": "success",
 "data": [
@@ -91,15 +91,16 @@ Copy
 { "id": 2, "name": "test user2" }
 ]
 }
+```
 
 ### Error Codes
 
-200 OK: Successful request.
-201 Ok: created
-400 Bad Request: Invalid request data.
-401 Unauthorized: Missing or invalid token.
-404 Not Found: Resource not found.
-500 Internal Server Error: Server error.
+- 200 OK: Successful request.
+- 201 Ok: created
+- 400 Bad Request: Invalid request data.
+- 401 Unauthorized: Missing or invalid token.
+- 404 Not Found: Resource not found.
+- 500 Internal Server Error: Server error.
 
 Versioning
 The current API version is v1. You can access it with /api/v1/.
@@ -112,7 +113,7 @@ Note: your credentials will be validated.
 
 ### Register User
 
-URL: /api/v1/auth/register
+URL: /api/v1/users
 Method: POST
 Description: Register a new user with an email and password.
 Request Body:
@@ -167,6 +168,30 @@ json
 
 Error Handling:
 - 401 Unauthorized: Invalid email or password.
+
+### Sign out
+
+URL: /api/v1/auth/signout
+Method: POST
+Description: sign outs an existing user and deletes the token.
+Request Body:
+json
+
+```
+{
+
+}
+```
+
+Response Example:
+json
+
+```
+{
+    "status": "success",
+    "message": "signed out"
+}
+```
 
 ## Protecting Routes
 
