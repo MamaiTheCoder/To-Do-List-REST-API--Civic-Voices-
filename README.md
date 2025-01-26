@@ -21,7 +21,7 @@ To-Do-List-REST-API--Civic-Voices-/
 │   │   ├── task.controllers.js
 │   │   ├── user.controllers.js
 │   ├── db/                     	# Compiled DB files
-|	|	├── connectToMongoDB.js.js
+|	|	├── connectToMongoDB.js
 │   ├── helpers/                	# Compiled helpers
 |	|	├── getMongooseObjectId.ts
 │   ├── models/ 	                # Compiled models
