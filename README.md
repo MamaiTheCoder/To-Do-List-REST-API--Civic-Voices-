@@ -11,7 +11,62 @@ Welcome to the **Todo API**. This API allows users to authenticate, manage their
 - typescript
 
 ### Project Structure
+```
+my-project/
+│
+│
+├── dist/                       	# Compiled JavaScript output
+│   ├── controllers/            	# Compiled controllers
+│   │   ├── auth.controllers.js
+│   │   ├── task.controllers.js
+│   │   ├── user.controllers.js
+│   ├── db/                     	# Compiled DB files
+|	|	├── connectToMongoDB.js.js
+│   ├── helpers/                	# Compiled helpers
+|	|	├── getMongooseObjectId.ts
+│   ├── models/ 	                # Compiled models
+|	|	├── task.model.js
+|	|	├── user.model.js
+│   ├── routers/	                # Compiled routers
+|	|	├── auth.router.js
+|	|	├── task.router.js
+|	|	├── user.router.js
+│   ├── types/ 	                 	# Compiled types
+|	|	├── request.d.ts
+|	|	├── response.d.ts
+│   ├── server.js               	# Compiled server entry file (from server.ts)
+│
+├── node_modules/               	# Installed dependencies
+├── src/                        	# TypeScript source code
+│   ├── controllers/            	# Controllers (business logic)
+│   │   ├── auth.controllers.ts
+│   │   ├── task.controllers.ts
+│   │   ├── user.controllers.ts
+│   ├── db/                     	# Database connection
+|	|	├── connectToMongoDB.ts
+│   ├── helpers/                	# Helper functions
+|	|	├── getMongooseObjectId.ts
+│   ├── models/ 	                # Mongoose models
+|	|	├── task.model.ts
+|	|	├── user.model.ts
+│   ├── routers/	                # API routers
+|	|	├── auth.router.ts
+|	|	├── task.router.ts
+|	|	├── user.router.ts
+│   ├── types/ 	                 	# Typescript types
+|	|	├── request.d.ts
+|	|	├── response.d.ts
+│   ├── server.ts               	# server entry file
+│
+├── .env                        	# Environment variables
+├── .gitignore                      # files ignored by git
+├── package-lock.json
+├── package.json               		# Project metadata and dependencies
+├── README.md               		# Project documentation
+├── tsconfig.json               	# TypeScript configuration
+└── tsconfig.tsbuildinfo
 
+```
 
 ### Features
 
@@ -51,6 +106,11 @@ PORT=<port you want the api to run on>
 JWT_SECRET=<set your secret key>
 ```
 
+- if you have any issues connecting to the database try using the string below
+```
+MONGO_DB_URI=mongodb://<your username>:<db_password>@cluster0-shard-00-00.vnabx.mongodb.net:27017,cluster0-shard-00-01.vnabx.mongodb.net:27017,cluster0-shard-00-02.vnabx.mongodb.net:27017/<your database name>?ssl=true&replicaSet=atlas-8046u6-shard-0&authSource=admin&retryWrites=true&w=majority&appName=Cluster0
+```
+
 ### Running Locally
 
 Start the API locally by running:
@@ -60,6 +120,7 @@ Start the API locally by running:
 ## Points to note
 - After making any change to the project in src folder, you need to run ```npm run build```.
 - The dist folder contains project to be deployed locally or on the server.
+- On the server run ```npm start```.
 
 ## User
 
