@@ -12,7 +12,7 @@ Welcome to the **Todo API**. This API allows users to authenticate, manage their
 
 ### Project Structure
 ```
-my-project/
+To-Do-List-REST-API--Civic-Voices-/
 │
 │
 ├── dist/                       	# Compiled JavaScript output
