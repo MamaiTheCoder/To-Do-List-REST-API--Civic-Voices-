@@ -6,6 +6,13 @@
 
 Welcome to the **Todo API**. This API allows users to authenticate, manage their todos, and interact with their tasks.
 
+### Technologies
+- Express.js
+- typescript
+
+### Project Structure
+
+
 ### Features
 
 - **User Authentication**: Register and log in users with email and password.
@@ -48,7 +55,11 @@ JWT_SECRET=<set your secret key>
 
 Start the API locally by running:
 
-`npm start`
+`npm run dev`
+
+## Points to note
+- After making any change to the project in src folder, you need to run ```npm run build```.
+- The dist folder contains project to be deployed locally or on the server.
 
 ## User
 
