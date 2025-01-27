@@ -15,7 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const express_jwt_1 = require("express-jwt");
 const dotenv_1 = __importDefault(require("dotenv"));
+const mongoose_1 = __importDefault(require("mongoose"));
 const user_model_1 = require("../models/user.model");
+const getMongooseObjectId_1 = require("../helpers/getMongooseObjectId");
 dotenv_1.default.config();
 const signin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -53,11 +55,11 @@ const signin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
 });
-const signout = (req, res) => {
+const signout = (request, response) => {
     // Clear the cookie 't'
-    res.clearCookie("t");
+    response.clearCookie("t");
     // Return a JSON response indicating the user has signed outs
-    res.status(200).json({
+    response.status(200).json({
         message: "signed out",
     });
 };
@@ -66,11 +68,21 @@ const requireSignin = (0, express_jwt_1.expressjwt)({
     algorithms: ['HS256'],
     userProperty: 'auth', // Attach the decoded JWT payload to `req.auth`
 });
-const hasAuthorization = (req, res, next) => {
-    const authorized = req.user && req.auth && req.user._id === req.auth._id;
+const hasAuthorization = (request, response, next) => {
+    var _a;
+    const userId = (0, getMongooseObjectId_1.getMongooseObjectId)(request, response, "userId"); // Extract userId from the request params
+    if (!userId) {
+        return response.status(400).json({ error: "userId is missing or invalid" });
+    }
+    const authId = new mongoose_1.default.Types.ObjectId((_a = request.auth) === null || _a === void 0 ? void 0 : _a._id);
+    console.log("Extracted authId:", authId); // Log authId for debugging
+    if (!authId) {
+        return response.status(401).json({ error: "Unauthorized, missing auth ID" });
+    }
+    const authorized = userId && authId && new mongoose_1.default.Types.ObjectId(userId).equals(authId);
     if (!authorized) {
         // Instead of returning the response here, we let Express handle the response and just exit the middleware.
-        res.status(403).json({
+        response.status(403).json({
             error: 'User is not authorized',
         });
         return; // End middleware without returning anything (which matches expected type)

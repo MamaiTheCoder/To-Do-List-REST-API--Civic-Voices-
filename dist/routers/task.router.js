@@ -12,8 +12,8 @@ router.route('/tasks/new/:userId')
 router.route('/tasks/by/:userId')
     .get(auth_controller_1.default.requireSignin, task_controller_1.default.listByUser);
 router.route('/tasks/:taskId/users/:userId')
-    .get(auth_controller_1.default.requireSignin, task_controller_1.default.retrieve)
-    .put(auth_controller_1.default.requireSignin, task_controller_1.default.update)
-    .delete(auth_controller_1.default.requireSignin, task_controller_1.default.remove);
+    .get(auth_controller_1.default.requireSignin, auth_controller_1.default.hasAuthorization, task_controller_1.default.retrieve)
+    .put(auth_controller_1.default.requireSignin, auth_controller_1.default.hasAuthorization, task_controller_1.default.update)
+    .delete(auth_controller_1.default.requireSignin, auth_controller_1.default.hasAuthorization, task_controller_1.default.remove);
 router.param("taskId", task_controller_1.default.retrieveTaskByID);
 exports.default = router;

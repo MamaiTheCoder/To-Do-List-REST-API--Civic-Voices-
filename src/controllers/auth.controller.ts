@@ -2,9 +2,11 @@ import { Request, Response, NextFunction } from 'express-serve-static-core';
 import jwt from "jsonwebtoken";
 import { expressjwt } from 'express-jwt';
 import dotenv from "dotenv";
+import mongoose from 'mongoose';
 
 import { User } from "../models/user.model";
 import { RequestCustom } from '../types/request';
+import { getMongooseObjectId } from '../helpers/getMongooseObjectId';
 
 dotenv.config();
 
@@ -19,7 +21,7 @@ interface UserResponse {
   email: string;
 }
 
-const signin = async (req: Request<{}, {}, SignInRequestBody>, res: Response): Promise<void> => {
+const signin = async (req: RequestCustom, res: Response): Promise<void> => {
   try {
     let user = await User.findOne({
       email: req.body.email,
@@ -60,12 +62,12 @@ const signin = async (req: Request<{}, {}, SignInRequestBody>, res: Response): P
   }
 };
 
-const signout = (req: Request<{}, {}, any>, res: Response): void => {
+const signout = (request: RequestCustom, response: Response): void => {
   // Clear the cookie 't'
-  res.clearCookie("t");
+  response.clearCookie("t");
 
   // Return a JSON response indicating the user has signed outs
-  res.status(200).json({
+  response.status(200).json({
     message: "signed out",
   });
 };
@@ -77,12 +79,27 @@ const requireSignin = expressjwt({
 
 } as any);
 
-const hasAuthorization = (req: RequestCustom, res: Response, next: NextFunction): void => {
-  const authorized = req.user && req.auth && req.user._id === req.auth._id;
+const hasAuthorization = (request: RequestCustom, response: Response, next: NextFunction): any => {
+  const userId: any = getMongooseObjectId(request, response, "userId"); // Extract userId from the request params
 
+  if (!userId) {
+    return response.status(400).json({ error: "userId is missing or invalid" });
+  }
+
+  
+
+  const authId = new mongoose.Types.ObjectId(request.auth?._id);
+  console.log("Extracted authId:", authId);  // Log authId for debugging
+
+  if (!authId) {
+    return response.status(401).json({ error: "Unauthorized, missing auth ID" });
+  }
+  
+  const authorized = userId && authId && new mongoose.Types.ObjectId(userId).equals(authId);
+  
   if (!authorized) {
     // Instead of returning the response here, we let Express handle the response and just exit the middleware.
-    res.status(403).json({
+    response.status(403).json({
       error: 'User is not authorized',
     });
     return;  // End middleware without returning anything (which matches expected type)

@@ -80,15 +80,6 @@ const listByUser = async (req: RequestCustom, res: Response): Promise<any> => {
   }
 };
 
-// Type for a Task object (based on your database schema)
-interface TaskType {
-  _id: mongoose.Types.ObjectId;
-  title: string;
-  description: string;
-  postedBy: mongoose.Types.ObjectId;
-  // add any other fields if necessary
-}
-
 const retrieveTaskByID = async(
   request: RequestCustom,
   response: Response,
@@ -108,12 +99,12 @@ const retrieveTaskByID = async(
   } catch (error) {
     if (error instanceof Error) {
       console.log("Error in retrievTaskByID controller: ", error.message);
+      return response.status(500).json({
+        error: error.message,
+      });
     } else {
       console.log("Unknown error in create controller");
     }
-    return response.status(500).json({
-      error: "internal server error",
-    });
   }
 };
 
@@ -148,6 +139,9 @@ const retrieve = async (req: RequestCustom, res: Response): Promise<any> => {
   } catch (error) {
     if (error instanceof Error) {
       console.log('Error in update controller: ', error.message);
+      return res.status(500).json({
+        error: error.message,
+      });
     } else {
       console.log('Unknown error in create controller');
     }
@@ -184,6 +178,9 @@ const update = async (req: RequestCustom, res: Response): Promise<any> => {
      // Since 'error' is of type 'unknown', we need to check if it's an instance of Error
     if (error instanceof Error) {
       console.log("Error in update controller: ", error.message);
+      return res.status(500).json({
+        error: error.message,
+      });
     } else {
       console.log("Unknown error in create controller");
     }
@@ -193,7 +190,7 @@ const update = async (req: RequestCustom, res: Response): Promise<any> => {
   }
 };
 
-const remove = async (req: Request, res: Response): Promise<any> => {
+const remove = async (req: RequestCustom, res: Response): Promise<any> => {
   try {
     const userId = getMongooseObjectId(req, res, "userId"); // Extract userId from the request params
     const taskId = getMongooseObjectId(req, res, "taskId"); // Extract taskId from the request params
@@ -226,12 +223,12 @@ const remove = async (req: Request, res: Response): Promise<any> => {
     // Since 'error' is of type 'unknown', we need to check if it's an instance of Error
     if (error instanceof Error) {
       console.log("Error in update controller: ", error.message);
+      return res.status(500).json({
+        error: error.message,
+      });
     } else {
       console.log("Unknown error in create controller");
     }
-    return res.status(500).json({
-      error: "internal server error",
-    });
   }
 };
 

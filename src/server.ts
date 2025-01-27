@@ -2,12 +2,13 @@ import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import helmet from 'helmet';
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 
 import connectToMongoDB from "./db/connectToMongoDB";
 import userRoute from "./routers/user.router";
 import authRoute from "./routers/auth.router";
 import taskRoute from './routers/task.router';
+import { RequestCustom } from "./types/request";
 
 dotenv.config();
 
@@ -29,7 +30,7 @@ app.use("/api/v1", taskRoute);
 
 app.use((
   err: UnauthorizedError | Error,  // Typecast `err` to either UnauthorizedError or generic Error
-  req: Request, 
+  req: RequestCustom, 
   res: Response, 
   next: NextFunction
 ) => {

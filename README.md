@@ -31,9 +31,7 @@ To-Do-List-REST-API--Civic-Voices-/
 |	|	├── auth.router.js
 |	|	├── task.router.js
 |	|	├── user.router.js
-│   ├── types/ 	                 	# Compiled types
-|	|	├── request.d.ts
-|	|	├── response.d.ts
+|	|
 │   ├── server.js               	# Compiled server entry file (from server.ts)
 │
 ├── node_modules/               	# Installed dependencies

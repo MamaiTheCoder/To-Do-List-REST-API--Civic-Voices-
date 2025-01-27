@@ -89,13 +89,13 @@ const retrieveTaskByID = (request, response, next, id) => __awaiter(void 0, void
     catch (error) {
         if (error instanceof Error) {
             console.log("Error in retrievTaskByID controller: ", error.message);
+            return response.status(500).json({
+                error: error.message,
+            });
         }
         else {
             console.log("Unknown error in create controller");
         }
-        return response.status(500).json({
-            error: "internal server error",
-        });
     }
 });
 const retrieve = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -123,6 +123,9 @@ const retrieve = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     catch (error) {
         if (error instanceof Error) {
             console.log('Error in update controller: ', error.message);
+            return res.status(500).json({
+                error: error.message,
+            });
         }
         else {
             console.log('Unknown error in create controller');
@@ -155,6 +158,9 @@ const update = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         // Since 'error' is of type 'unknown', we need to check if it's an instance of Error
         if (error instanceof Error) {
             console.log("Error in update controller: ", error.message);
+            return res.status(500).json({
+                error: error.message,
+            });
         }
         else {
             console.log("Unknown error in create controller");
@@ -192,13 +198,13 @@ const remove = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         // Since 'error' is of type 'unknown', we need to check if it's an instance of Error
         if (error instanceof Error) {
             console.log("Error in update controller: ", error.message);
+            return res.status(500).json({
+                error: error.message,
+            });
         }
         else {
             console.log("Unknown error in create controller");
         }
-        return res.status(500).json({
-            error: "internal server error",
-        });
     }
 });
 exports.default = {

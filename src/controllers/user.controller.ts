@@ -27,12 +27,12 @@ const create = async (
     // Since 'error' is of type 'unknown', we need to check if it's an instance of Error
     if (error instanceof Error) {
       console.log("Error in create controller: ", error.message);
+      return response.status(500).json({
+        error: error.message,
+      });
     } else {
       console.log("Unknown error in create controller");
     }
-    return response.status(500).json({
-      error: "internal server error",
-    });
   }
 };
 
@@ -75,6 +75,9 @@ const userByID = async(
       });
     }
     request.user = user;
+    console.log('====================================');
+    console.log(request.user);
+    console.log('====================================');
     next();
   } catch (error) {
     // Since 'error' is of type 'unknown', we need to check if it's an instance of Error

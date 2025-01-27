@@ -22,14 +22,17 @@ router.route('/tasks/by/:userId')
 router.route('/tasks/:taskId/users/:userId')
     .get(
         authCtrl.requireSignin,
+        authCtrl.hasAuthorization,
         taskCtrl.retrieve
     )
     .put(
         authCtrl.requireSignin,
+        authCtrl.hasAuthorization,
         taskCtrl.update
     )
     .delete(
         authCtrl.requireSignin,
+        authCtrl.hasAuthorization,
         taskCtrl.remove
     )
 

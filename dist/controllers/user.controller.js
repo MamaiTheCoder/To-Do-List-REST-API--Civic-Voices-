@@ -27,13 +27,13 @@ const create = (request, response) => __awaiter(void 0, void 0, void 0, function
         // Since 'error' is of type 'unknown', we need to check if it's an instance of Error
         if (error instanceof Error) {
             console.log("Error in create controller: ", error.message);
+            return response.status(500).json({
+                error: error.message,
+            });
         }
         else {
             console.log("Unknown error in create controller");
         }
-        return response.status(500).json({
-            error: "internal server error",
-        });
     }
 });
 const list = (request, response) => __awaiter(void 0, void 0, void 0, function* () {
@@ -68,6 +68,9 @@ const userByID = (request, response, next, id) => __awaiter(void 0, void 0, void
             });
         }
         request.user = user;
+        console.log('====================================');
+        console.log(request.user);
+        console.log('====================================');
         next();
     }
     catch (error) {
